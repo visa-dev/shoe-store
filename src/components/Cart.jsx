@@ -37,6 +37,10 @@ const Cart = () => {
     navigater('/');
   }
 
+  const createOrder=()=>{
+    alert("Not develope yet");
+  }
+
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white shadow-md rounded-lg p-6">
@@ -85,7 +89,7 @@ const Cart = () => {
             </div>
 
             <div className="flex justify-between items-center mt-4">
-              <button onClick={alert("need to devolop")} className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md focus:outline-none">
+              <button onClick={createOrder} className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md focus:outline-none">
                 Checkout
               </button>
               <button onClick={clearCart} className="w-full md:w-auto bg-black hover:bg-red-600 text-white py-2 px-4 rounded-md focus:outline-none">
