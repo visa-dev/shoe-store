@@ -1,6 +1,6 @@
 
 import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { tokens } from "../../../theme";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { BsSendFill } from "react-icons/bs";
@@ -20,6 +20,14 @@ const SideBar = () => {
   const { toggled, setToggled } = useContext(ToggledContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [userName,setUserName]=useState();
+
+  useEffect(() => {
+  setUserName(localStorage.getItem("username"));
+  }, []);
+  
+
+
   return (
     <Sidebar
       backgroundColor={colors.primary[400]}
@@ -69,7 +77,7 @@ const SideBar = () => {
                   textTransform="capitalize"
                   color={colors.greenAccent[500]}
                 >
-                  <Link to='/'>THE SHOES</Link>
+                  <Link to='/dashboard'>THE SHOES</Link>
                 </Typography>
               </Box>
             )}
@@ -96,7 +104,7 @@ const SideBar = () => {
           />
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="h3" fontWeight="bold" color={colors.gray[100]}>
-              Viraj Sachin
+             {userName}
             </Typography>
 
           </Box>
