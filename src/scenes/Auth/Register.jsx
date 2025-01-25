@@ -76,7 +76,9 @@ const Register = () => {
         try {
           const response=  await api.post("/api/auth/register", formData);
           if (response.jwt!=null) {
+            localStorage.clear();
             localStorage.setItem('token', response.jwt);
+            localStorage.setItem('username',response.username);
             // Success response
             Swal.fire({
               title: 'Success!',
@@ -112,7 +114,7 @@ const Register = () => {
         username: "",
         password: "",
         mobile: "",
-        role: "customer",
+        role: "ROLE_CUSTOMER",
       });
     }
   };

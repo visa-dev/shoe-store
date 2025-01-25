@@ -65,7 +65,7 @@ const SideBar = () => {
                 gap="12px"
                 sx={{ transition: ".3s ease" }}
               >
-               <Link to='/'>
+               <Link to='/dashboard'>
                <img
                   style={{ width: "30px", height: "30px", borderRadius: "8px" }}
                   src={logo}
@@ -124,71 +124,15 @@ const SideBar = () => {
                 }}
               >
                 <Item
-                  title="REQUESTS"
-                  path="/requests"
+                  title="My Orders"
+                  path="/order/summery"
                   colors={colors}
                   icon={<BsSendFill />}
                 />
               </Menu>
         </Box>
 
-      {/*<Box mb={5} pl={collapsed ? undefined : "5%"}>*/}
-      {/*  <Menu*/}
-      {/*    menuItemStyles={{*/}
-      {/*      button: {*/}
-      {/*        ":hover": {*/}
-      {/*          color: "#868dfb",*/}
-      {/*          background: "transparent",*/}
-      {/*          transition: ".4s ease",*/}
-      {/*        },*/}
-      {/*      },*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <Item*/}
-      {/*      title="Dashboard"*/}
-      {/*      path="/"*/}
-      {/*      colors={colors}*/}
-      {/*      icon={<DashboardOutlined />}*/}
-      {/*    />*/}
-      {/*  </Menu>*/}
-      {/*  <Typography*/}
-      {/*    variant="h6"*/}
-      {/*    color={colors.gray[300]}*/}
-      {/*    sx={{ m: "15px 0 5px 20px" }}*/}
-      {/*  >*/}
       
-      {/*  </Typography>{" "}*/}
-      {/*  <Menu*/}
-      {/*    menuItemStyles={{*/}
-      {/*      button: {*/}
-      {/*        ":hover": {*/}
-      {/*          color: "#868dfb",*/}
-      {/*          background: "transparent",*/}
-      {/*          transition: ".4s ease",*/}
-      {/*        },*/}
-      {/*      },*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <Item*/}
-      {/*      title="Manage Team"*/}
-      {/*      path="/team"*/}
-      {/*      colors={colors}*/}
-      {/*      icon={<PeopleAltOutlined />}*/}
-      {/*    />*/}
-      {/*    <Item*/}
-      {/*      title="Contacts Information"*/}
-      {/*      path="/contacts"*/}
-      {/*      colors={colors}*/}
-      {/*      icon={<ContactsOutlined />}*/}
-      {/*    />*/}
-      {/*    <Item*/}
-      {/*      title="Invoices Balances"*/}
-      {/*      path="/invoices"*/}
-      {/*      colors={colors}*/}
-      {/*      icon={<ReceiptOutlined />}*/}
-      {/*    />*/}
-      {/*  </Menu>*/}
-      {/*</Box>*/}
     </Sidebar>
   );
 };

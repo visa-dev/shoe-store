@@ -55,6 +55,7 @@ const api = new ApiService();
       const response=  await api.post("/api/auth/login", formData);
       console.log(response);
       if (response.jwt!=null) {
+        localStorage.clear();
         localStorage.setItem('token', response.jwt);
         localStorage.setItem("username",response.username);
         localStorage.setItem("role",response.role);

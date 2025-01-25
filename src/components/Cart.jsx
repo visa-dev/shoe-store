@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from '../context/CartContext';
 import { useNavigate } from "react-router-dom";
+import ApiService from "../Api/ApiService";
+import Swal from "sweetalert2";
 const Cart = () => {
+
+  const api = new ApiService();
+
   // State to manage cart items
   const [cartItems, setCartItems] = useState(() => {
     // Initialize cartItems from localStorage if present
@@ -9,8 +14,10 @@ const Cart = () => {
     return savedCartItems ? JSON.parse(savedCartItems) : [];
   });
 
-  const {clearCart} = useCart();
-  const navigater= useNavigate();
+  const [jwt,setJwt]= useState("");
+
+  const { clearCart } = useCart();
+  const navigater = useNavigate();
   // Handle quantity change
   const handleQuantityChange = (id, amount) => {
     setCartItems((prevItems) =>
@@ -25,6 +32,7 @@ const Cart = () => {
   // Update localStorage whenever cartItems change
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    setJwt(localStorage.getItem("token"));
   }, [cartItems]);
 
   // Calculate total price
@@ -33,13 +41,71 @@ const Cart = () => {
     0
   );
 
-  const goToHome=()=>{
-    navigater('/');
+  const goToHome = () => {
+    navigater('/dashboard');
   }
 
-  const createOrder=()=>{
-    alert("Not develope yet");
-  }
+  const createOrder = async () => {
+    const orderId = `ORD-${Date.now()}`;
+    const username = localStorage.getItem("username");
+
+
+    const orderItemList = cartItems.map(item => ({
+      orderId: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+      statu:"Pending"
+    }));
+
+    const orderRequest = {
+      orderId,
+      username,
+      orderItemList,
+      totalPrice,
+      status:"Pending"
+    };
+
+    console.log(orderRequest);
+    try {
+      const response = await api.post("/api/auth/order/create", orderRequest, {
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
+      console.log(response);
+
+      if (response.orderId) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Order placed successfully!',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+        }).then(() => {
+          localStorage.setItem("cartItems",null)
+          window.location.href = '/dashboard';
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Something went wrong. Please try again.',
+          icon: 'error',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: 'Error!',
+        text: error.response?.data?.message || 'Network error. Please try again later.',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+    }
+  };
+
 
   return (
     <div className="container mx-auto p-4">
@@ -76,7 +142,7 @@ const Cart = () => {
                       +
                     </button>
                     <span className="text-gray-700 ml-4">
-                      ${item.price * item.quantity}
+                      Rs {item.price * item.quantity}.00
                     </span>
                   </div>
                 </li>
@@ -85,7 +151,7 @@ const Cart = () => {
 
             <div className="flex justify-between items-center mt-4 border-t pt-4">
               <h3 className="text-xl font-semibold text-gray-800">Total:</h3>
-              <p className="text-lg font-semibold text-gray-900">${totalPrice}</p>
+              <p className="text-lg font-semibold text-gray-900">Rs {totalPrice}.00</p>
             </div>
 
             <div className="flex justify-between items-center mt-4">

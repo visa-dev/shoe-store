@@ -71,7 +71,7 @@ const Navbar = () => {
        }
       </Box>
 
-      <Box>
+      <Box >
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <LightModeOutlined />
@@ -79,9 +79,7 @@ const Navbar = () => {
             <DarkModeOutlined />
           )}
         </IconButton>
-        <IconButton>
-          <NotificationsOutlined />
-        </IconButton>
+      
         <IconButton onClick={goToCart} sx={{ position: 'relative' }}>
       <Badge
         badgeContent={cartSize}

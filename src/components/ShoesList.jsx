@@ -13,28 +13,29 @@ import { useCart } from '../context/CartContext';
 
 const ShoesList = () => {
     const { addToCart } = useCart();
-    
+
     const shoes = [
-        { id: 1, name: 'Nike Air Max', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 2, name: 'Adidas UltraBoost', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 3, name: 'Puma Suede', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 4, name: 'Reebok Classic', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 5, name: 'Converse Chuck Taylor', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 6, name: 'Nike Air Max', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 7, name: 'Adidas UltraBoost', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 8, name: 'Puma Suede', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 9, name: 'Reebok Classic', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) },
-        { id: 10, name: 'Converse Chuck Taylor', quantity: 0, price: (Math.random() * (150 - 50) + 50).toFixed(2) }
+        { id: 1, name: 'Nike Air Max', quantity: 1, price: 121, image: '/src/assets/shoes1.jpg' },
+        { id: 2, name: 'Adidas Boost', quantity: -1, price: 181, image: '/src/assets/shoes2.jpg' },
+        { id: 3, name: 'Puma Suede', quantity: -1, price: 85, image: '/src/assets/shoes3.jpg' },
+        { id: 4, name: 'Rok Classic', quantity: 1, price: 70, image: '/src/assets/shoes4.jpg' },
+        { id: 5, name: 'Converse Chuck Taylor', quantity: 1, price: 55, image: '/src/assets/shoes5.jpg' },
+        { id: 6, name: 'Nike Air Max', quantity: 1, price: 126, image: '/src/assets/shoes1.jpg' },
+        { id: 7, name: 'Adidas UltraBoost', quantity: -1, price: 160, image: '/src/assets/shoes2.jpg' },
+        { id: 8, name: 'Puma Suede', quantity: 1, price: 90, image: '/src/assets/shoes3.jpg' },
+        { id: 9, name: 'Reebok Classic', quantity: 1, price: 66, image: '/src/assets/shoes4.jpg' },
+        { id: 10, name: 'Converse Chuck Taylor', quantity: -1, price: 60, image: '/src/assets/shoes5.jpg' }
     ];
-    
-    
-    // State to manage the cart
+
+    // Update availability based on quantity (true if quantity > 0)
+    shoes.forEach(shoe => {
+        shoe.availability = shoe.quantity > 0;
+    });
+
 
     const theme = useTheme();
     const iconColor = theme.palette.mode === 'dark' ? 'white' : 'black';
 
-    
-   
 
     return (
         <div>
@@ -55,26 +56,33 @@ const ShoesList = () => {
                                             {shoe.name}
                                         </Typography>
                                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                            {shoe.name}s are a type of shoe known for their style and comfort.
+                                            {shoe.name} s are a type of shoe known for their style and comfort.
                                         </Typography>
+                                        <div className='mt-3'>  Rs {shoe.price}.00</div>
+
                                     </CardContent>
                                 </CardActionArea>
-                                <CardActions>
-                                    <Button>
-                                        <div className='border rounded-3xl'>
-                                            <IconButton onClick={() => addToCart(shoe)}>
-                                                <FaCartPlus color={iconColor} />
-                                            </IconButton>
-                                        </div>
-                                    </Button>
+                                <CardActions className="flex justify-between">
+                                    {shoe.quantity >= 0 ? (
+                                        <Button onClick={() => addToCart(shoe)}>
+                                            <div className="border rounded-3xl">
+                                                <IconButton>
+                                                    <FaCartPlus color={iconColor} />
+                                                </IconButton>
+                                            </div>
+                                        </Button>
+                                    ) : (
+                                        <div className="border bg-red-500 p-1 rounded-md">Out of Stock</div>
+                                    )}
                                 </CardActions>
+
                             </Card>
                         </div>
                     ))
                 }
             </div>
 
-            
+
         </div>
     );
 };
